@@ -33,6 +33,7 @@ app.get("/todos", async (req, res) => {
   }
 });
 
+// get single todo
 app.get("/todos/:id", async (req, res) => {
   try {
     const { id } = req.params;
@@ -42,6 +43,28 @@ app.get("/todos/:id", async (req, res) => {
     console.log(error.message);
   }
 });
+
+// update todo
+
+app.put("/todos/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { description } = req.body;
+    const updateTodo = await pool.query("UPDATE todo SET description = $1 WHERE todo_id = $2", [description, id]);
+    res.json("Todo updated")
+  } catch (error) {
+    console.log(error.message);
+  }
+});
+
+
+
+
+
+
+
+
+
 
 app.listen(5000, () => {
   console.log("server running on 5000");
